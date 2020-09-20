@@ -14,7 +14,7 @@
     }
 
     function ValidateToken($conn){
-        $query = "SELECT id, username, email, token FROM users WHERE (token = ?)";
+        $query = "SELECT id, username, email, organization, occupation, token FROM users WHERE (token = ?)";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, 's', $_SESSION['ProTrackAccessToken']);
         mysqli_stmt_execute($stmt);
@@ -32,6 +32,8 @@
                 $_SESSION['uname'] = $row['username'];
                 $_SESSION['user_id'] = $row['id'];
 				$_SESSION['useremail'] = $row['email'];
+				$_SESSION['userorg'] = $row['organization'];
+				$_SESSION['userocc'] = $row['occupation'];
             }
         }
     }
@@ -174,8 +176,8 @@
     }
 	
 	if(isset($_GET['editprofile'])){
-        $sta = mysqli_prepare($conn, "UPDATE users SET username = ?, email = ? WHERE id =?");
-        mysqli_stmt_bind_param($sta, 'ssi', $_GET['username'], $_GET['email'], $_SESSION['user_id']);
+        $sta = mysqli_prepare($conn, "UPDATE users SET username = ?, organization = ?, occupation = ? ,email = ? WHERE id =?");
+        mysqli_stmt_bind_param($sta, 'ssssi', $_GET['username'], $_GET['organization'], $_GET['occupation'], $_GET['email'], $_SESSION['user_id']);
         mysqli_stmt_execute($sta);
     }
 ?>
@@ -222,7 +224,7 @@
 		
 		<style>
 .dropdown1 {
-	padding-left:529px;	
+  padding-left:20px;	
   position: relative;
   display: inline-block;
 }
@@ -472,6 +474,8 @@
                     <h1 class = "modal-title">Edit your profile</h1>
                     <input class = "input" type = "text" name = "username" placeholder="Enter your new name">
                     <input class = "input" type = "text" name = "email" placeholder="Enter your new email" >
+					<input class = "input" type = "text" name = "organization" placeholder="Enter your organization" >
+					<input class = "input" type = "text" name = "occupation" placeholder="Enter your occupation" >
                     <input type = "submit" name = "editprofile" class = "submit-button" value = "Submit">
                 </form>
             </div>
@@ -484,7 +488,8 @@
                     <h1 class = "modal-title">View your profile</h1>
 					<h3>Your UserName: <?php echo  $_SESSION['uname']; ?></h3><br>
 					<h3>Your Email: <?php echo  $_SESSION['useremail']; ?></h3><br>
-					
+					<h3>Your Organization: <?php echo  $_SESSION['userorg']; ?></h3><br>
+					<h3>Your Occupation: <?php echo  $_SESSION['userocc']; ?></h3><br>
                 </form>
             </div>
         </div>
