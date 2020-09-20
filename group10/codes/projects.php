@@ -199,9 +199,47 @@
             <form>
                 <button type = "submit" name = "logout" class = "logout-button" ><i class="fa fa-sign-out" style="font-size:18px"></i></button>
             </form>
+            <button onclick = "ShowHelpModal()"  id = "new_project" class = "logout-button" style="background-color:purple;"><i class="fa fa-info" style="font-size:18px"></i></button>
             <input onclick = "AddProjectModal()" id = "new_project" type = "submit" class = "logout-button new-button" value = "New Project">
             <input onclick = "RefereeProjects(0)" id = "new_project" type = "submit" class = "logout-button ref-button" value = "Referee Projects">
         </div>
+		
+		<style>
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 240px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
 
 
         <?php
@@ -379,6 +417,124 @@
                 </form>
             </div>
         </div>
+		
+		<div id="newShowHelpModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal4">&times;</span>
+                    <h1 class = "modal-title">Help</h1>
+					<div class="dropdown">
+                      <button class="dropbtn">Help Sections</button>
+                          <div class="dropdown-content">
+                           <a onclick = "ShowHelpModal()" >Section1: Project</a>
+						  <a onclick = "ShowHelpModal1()" >Section2: New Goal</a>
+						  <a onclick = "ShowHelpModal2()" >Section3: Reminder</a>
+						  <a onclick = "ShowHelpModal3()" >Section4: Complete Goal</a>
+						  <a onclick = "ShowHelpModal4()" >Section5: Referee Project</a>
+                           </div>
+						</div>
+						
+				<h2>Section 1</h2><h2 style="color:green">Adding new project</h2>
+				<h3>- If you are a new user and don't have any project, add a new project by clicking top right red button.</h3>
+				<h3>- You can also create more than one project by clicking the same red button.</h3>
+				<h3>- After clicking "New Project" button you must enter the project name and the project description.</h3>
+				<h3>- It is optional to put a referee to your project.</h3>
+				<h3>- After creating your project, you can add new goals (Section2) and reminders (Section3) for your project.</h3> 
+				<h3>- You can delete your project by clicking the X icon on the top right of the project container.</h3>
+        </div>
+		</div>
+		
+	
+		<div id="newShowHelpModal1" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal5">&times;</span>
+                    <h1 class = "modal-title">Help</h1>
+					<div class="dropdown">
+                      <button class="dropbtn">Help Sections</button>
+                          <div class="dropdown-content">
+						  <a onclick = "ShowHelpModal()" >Section1: Project</a>
+						  <a onclick = "ShowHelpModal1()" >Section2: New Goal</a>
+						  <a onclick = "ShowHelpModal2()" >Section3: Reminder</a>
+						  <a onclick = "ShowHelpModal3()" >Section4: Complete Goal</a>
+						  <a onclick = "ShowHelpModal4()" >Section5: Referee Project</a>
+                           </div>
+						</div>
+				<h2>Section 2</h2><h2 style="color:green">Adding new goal to your project</h2>
+				<h3>- After creating your project (Section1), you can add goals to your project by clicking the blue plus icon on the "In Progress Goals" section row.</h3>
+				<h3>- Once you click the blue plus icon, you will be asked to enter goal name and goal description.</h3>
+				<h3>- After entering goal details, your goal will be displayed in the "In Progress Goals" section.</h3>				
+                <h3>- You can add reminders (Section3) to your goal once it is created.	</h3>			
+        </div>
+		</div>
+		
+		<div id="newShowHelpModal2" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal6">&times;</span>
+                    <h1 class = "modal-title">Help</h1>
+					<div class="dropdown">
+                      <button class="dropbtn">Help Sections</button>
+                          <div class="dropdown-content">
+						  <a onclick = "ShowHelpModal()" >Section1: Project</a>
+						  <a onclick = "ShowHelpModal1()" >Section2: New Goal</a>
+						  <a onclick = "ShowHelpModal2()" >Section3: Reminder</a>
+						  <a onclick = "ShowHelpModal3()" >Section4: Complete Goal</a>
+						  <a onclick = "ShowHelpModal4()" >Section5: Referee Project</a>
+                           </div>
+						</div>
+				<h2>Section 3</h2><h2 style="color:green">Adding reminder to your goal</h2>
+				<h3>- After creating your goal (Section2), you can add reminders to your goal by clicking the blue plus icon on your
+				goal name row displayed in "In progress Goals".</h3>
+				<h3>- Once you click the blue plus icon, you will be asked to enter reminder name and reminder date.</h3>
+				<h3>- After entering reminder details, your reminder will be displayed after clicking on your goal name.</h3>				
+                <h3>- You can delete a reminder for a goal by clicking the X icon on the same row of the reminder name.</h3>					
+        </div>
+		</div>
+		
+		<div id="newShowHelpModal3" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal7">&times;</span>
+                    <h1 class = "modal-title">Help</h1>
+					<div class="dropdown">
+                      <button class="dropbtn">Help Sections</button>
+                          <div class="dropdown-content">
+						  <a onclick = "ShowHelpModal()" >Section1: Project</a>
+						  <a onclick = "ShowHelpModal1()" >Section2: New Goal</a>
+						  <a onclick = "ShowHelpModal2()" >Section3: Reminder</a>
+						  <a onclick = "ShowHelpModal3()" >Section4: Complete Goal</a>
+						  <a onclick = "ShowHelpModal4()" >Section5: Referee Project</a>
+                           </div>
+						</div>
+				<h2>Section 4</h2><h2 style="color:green">Completing a goal</h2>
+				<h3>- After creating a goal is created (Section2), you can mark it as complete by clicking on
+			      green tick icon appearing on the goal name row</h3>
+				 <h3>- Once you mark you goal as complete, you can see it displayed on the "Completed Goals" list,
+				 also the progress bar will be changed accrding to your finished/unfinished goals.</h3>
+				 <h3>- Once you mark you goal as complete, you can see it displayed on the "Completed Goals" list,
+				 <h3>- You can delete a completed goal by clicking the X icon on the same row of the completed goal name.</h3>
+				  
+        </div>
+		</div>
+		
+		<div id="newShowHelpModal4" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal8">&times;</span>
+                    <h1 class = "modal-title">Help</h1>
+					<div class="dropdown">
+                      <button class="dropbtn">Help Sections</button>
+                          <div class="dropdown-content">
+						  <a onclick = "ShowHelpModal()" >Section1: Project</a>
+						  <a onclick = "ShowHelpModal1()" >Section2: New Goal</a>
+						  <a onclick = "ShowHelpModal2()" >Section3: Reminder</a>
+						  <a onclick = "ShowHelpModal3()" >Section4: Complete Goal</a>
+						  <a onclick = "ShowHelpModal4()" >Section5: Referee Project</a>
+                           </div>
+						</div>
+				<h2>Section 5</h2><h2 style="color:green">Referee Project</h2>
+				<h3>You can view other users projects by clicking on the green "Referee Projects" on the top right of the page.</h3>
+				<h3>You will be able to view them only if the other user put your name when creating their own project.</h3>
+				<h3>You can only view their progress, functions like add goals/reminders are disabled.</h3>
+				  
+        </div>
+		</div>
 
         <script src = "assets/projects2.js"></script>
     </body>
