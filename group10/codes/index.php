@@ -13,14 +13,15 @@
         header("Location: projects.php");
         exit();
     }else{
-        if(isset($_POST['signup']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email'])){
+        if(isset($_POST['signup']) && isset($_POST['username']) && isset($_POST['organization']) && isset($_POST['occupation']) 
+			&& isset($_POST['password']) && isset($_POST['email'])){
             if(userExists($conn) != false){
                 $upError = "User already exists !!";
             }else{
-                $stmt = $conn->prepare("INSERT INTO users (username, email, password, token) VALUES (?, ?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO users (username, organization, occupation, email, password, token) VALUES (?, ?, ?, ?, ?, ?)");
                 $token = generateRandomString(256);
                 $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $stmt->bind_param("ssss", $_POST['username'], $_POST['email'], $pass, $token);
+                $stmt->bind_param("ssssss", $_POST['username'], $_POST['organization'], $_POST['occupation'], $_POST['email'], $pass, $token);
                 $stmt->execute();
                 $_SESSION['ProTrackAccessToken'] = $token;
                 setcookie("ProTrackAccessToken", $token, time() + (86400 * 30 * 12));
@@ -86,7 +87,7 @@
     </head>
     <body>
         <h1 class = "title">Welcome to Pro-Track</h1>
-        <div class="container">
+        <div class="container" style="height:550px;">
             <div class = "top-bar">
                 <div id = "signin_button" class = "sign-button left">Signin</div>
                 <div id = "signup_button" class = "sign-button right">Signup</div>
@@ -103,6 +104,8 @@
 
             <form id = "up_container" class = "sign-container" method="POST">
                 <input class = "input" type = "text" name = "username" placeholder="Your Username..">
+				<input class = "input" type = "text" name = "organization" placeholder="Your Organization (University,Company,etc)..">
+				<input class = "input" type = "text" name = "occupation" placeholder="Your Occupation..">
                 <input class = "input" type = "email" name = "email" placeholder="Your Email..">
                 <input class = "input"  type = "password" name = "password" placeholder="Your Password">
                 <input type = "submit" id = "signup" name = "signup" class = "submit-button" value = "Signup">

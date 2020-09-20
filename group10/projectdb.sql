@@ -85,6 +85,8 @@ CREATE TABLE `reminders` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` text NOT NULL,
+  `organization` text NOT NULL,
+  `occupation` text NOT NULL,
   `email` text NOT NULL,
   `password` varchar(255) NOT NULL,
   `token` text NOT NULL
