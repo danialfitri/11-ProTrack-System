@@ -14,7 +14,7 @@
     }
 
     function ValidateToken($conn){
-        $query = "SELECT id, username, token FROM users WHERE (token = ?)";
+        $query = "SELECT id, username, email, token FROM users WHERE (token = ?)";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, 's', $_SESSION['ProTrackAccessToken']);
         mysqli_stmt_execute($stmt);
@@ -31,6 +31,7 @@
             }else{
                 $_SESSION['uname'] = $row['username'];
                 $_SESSION['user_id'] = $row['id'];
+				$_SESSION['useremail'] = $row['email'];
             }
         }
     }
@@ -171,6 +172,12 @@
             }
         }
     }
+	
+	if(isset($_GET['editprofile'])){
+        $sta = mysqli_prepare($conn, "UPDATE users SET username = ?, email = ? WHERE id =?");
+        mysqli_stmt_bind_param($sta, 'ssi', $_GET['username'], $_GET['email'], $_SESSION['user_id']);
+        mysqli_stmt_execute($sta);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -193,18 +200,58 @@
         </header>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src = "assets/projects.js"></script>
+        <script src = "assets/projects.js"></script>	
 
         <div class = "Links" >
             <form>
                 <button type = "submit" name = "logout" class = "logout-button" ><i class="fa fa-sign-out" style="font-size:18px"></i></button>
             </form>
             <button onclick = "ShowHelpModal()"  id = "new_project" class = "logout-button" style="background-color:purple;"><i class="fa fa-info" style="font-size:18px"></i></button>
+			<div class="dropdown1">
+			<button id = "new_project" class = "logout-button" style="background-color:orange;"><i class="fa fa-user" style="font-size:18px"> Profile</i></button>
+			 <div class="dropdown-content1">
+						  <a onclick = "ViewProfileModal()" >View Profile</a>
+						  <a onclick = "EditProfileModal()" >Edit Profile</a>
+                           </div>
+						</div>
             <input onclick = "AddProjectModal()" id = "new_project" type = "submit" class = "logout-button new-button" value = "New Project">
             <input onclick = "RefereeProjects(0)" id = "new_project" type = "submit" class = "logout-button ref-button" value = "Referee Projects">
+			
+			
         </div>
 		
 		<style>
+.dropdown1 {
+	padding-left:529px;	
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 240px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content1 a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content1 a:hover {background-color: #ddd;}
+
+.dropdown1:hover .dropdown-content1 {display: block;}
+
+.dropdown1:hover .dropbtn {background-color: #3e8e41;}	
+		
+			
+		
+		
 .dropbtn {
   background-color: #4CAF50;
   color: white;
@@ -418,6 +465,30 @@
             </div>
         </div>
 		
+			<div id="newEditProfileModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal9">&times;</span>
+                <form class = "sign-container" method="GET">
+                    <h1 class = "modal-title">Edit your profile</h1>
+                    <input class = "input" type = "text" name = "username" placeholder="Enter your new name">
+                    <input class = "input" type = "text" name = "email" placeholder="Enter your new email" >
+                    <input type = "submit" name = "editprofile" class = "submit-button" value = "Submit">
+                </form>
+            </div>
+        </div>
+		
+			<div id="newViewProfileModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal10">&times;</span>
+                <form class = "sign-container" method="GET">
+                    <h1 class = "modal-title">View your profile</h1>
+					<h3>Your UserName: <?php echo  $_SESSION['uname']; ?></h3><br>
+					<h3>Your Email: <?php echo  $_SESSION['useremail']; ?></h3><br>
+					
+                </form>
+            </div>
+        </div>
+		
 		<div id="newShowHelpModal" class="modal">
             <div class="modal-content">
                 <span class="close" id = "closeModal4">&times;</span>
@@ -535,7 +606,9 @@
 				  
         </div>
 		</div>
-
-        <script src = "assets/projects2.js"></script>
+		
+	
+        <script src = "assets/projects3.js"></script>
+       
     </body>
 </html>
