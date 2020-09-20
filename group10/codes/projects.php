@@ -157,9 +157,9 @@
     }
 
     if(isset($_GET['addproject'])){
-        $addq = "INSERT INTO projects (name, description, owner_id) VALUES (?, ?, ?)";
+        $addq = "INSERT INTO projects (name, description, owner_id, referee) VALUES (?, ?, ?, ?)";
         $sta = mysqli_prepare($conn, $addq);
-        mysqli_stmt_bind_param($sta, 'ssi', $_GET['name'], $_GET['description'], $_SESSION['user_id']);
+        mysqli_stmt_bind_param($sta, 'ssis', $_GET['name'], $_GET['description'], $_SESSION['user_id'], $_GET['referees'] );
         mysqli_stmt_execute($sta);
 
         $newid = mysqli_insert_id($conn);
@@ -178,6 +178,12 @@
 	if(isset($_GET['editprofile'])){
         $sta = mysqli_prepare($conn, "UPDATE users SET username = ?, organization = ?, occupation = ? ,email = ? WHERE id =?");
         mysqli_stmt_bind_param($sta, 'ssssi', $_GET['username'], $_GET['organization'], $_GET['occupation'], $_GET['email'], $_SESSION['user_id']);
+        mysqli_stmt_execute($sta);
+    }
+
+	if(isset($_GET['editGoal'])){
+        $sta = mysqli_prepare($conn, "UPDATE goals SET name = ?, description = ? WHERE id =?");
+        mysqli_stmt_bind_param($sta, 'ssi', $_GET['name'], $_GET['description'], $_GET['goalid']);
         mysqli_stmt_execute($sta);
     }
 ?>
@@ -340,7 +346,7 @@
 
                 <div class = "project-goals">
                     <div class = "project-working">
-                        <h3>In Progress Goals<span class = "fa fa-plus" onclick="AddGoalModal(<?php echo $row['id']; ?>)"></span></h1>
+                        <h3>In Progress Goals<span class = "fa fa-plus" onclick="AddGoalModal(<?php echo $row['id']; ?>)"></span></h3>
 
                         <?php
                             for($j = 0; $j < $goals_num; $j++){
@@ -379,6 +385,7 @@
                                         </div>
                                     <?php }
                                     ?>
+                                <span class="fa" style="cursor:pointer" onclick="editGoalModal(<?php echo $goal['id']; ?>)">Edit</span>
                             </div>
                         </div>
                         <?php } ?>
@@ -386,7 +393,7 @@
                     </div>
 
                     <div class = "project-completed">
-                        <h3>Completed Goals</h1>
+                        <h3>Completed Goals</h3>
                         <?php
                             for($k = 0; $k < $cgoals_num; $k++){
                                 $cgoal = $r3->fetch_assoc();
@@ -450,6 +457,19 @@
                     <input class = "input" type = "text" name = "name" placeholder="Name of the goal" required>
                     <input class = "input" type = "text" name = "description" placeholder="Describe the goal" required>
                     <input type = "submit" name = "addgoal" class = "submit-button" value = "Add Goal">
+                </form>
+            </div>
+        </div>
+
+        <div id="editGoalModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id = "closeModal11">&times;</span>
+                <form class = "sign-container" method="GET">
+                    <h1 class = "modal-title">Edit Goal</h1>
+                    <input id = "hiddeneditgoalid" style="display: none;" name = "goalid" value = "">
+                    <input class = "input" type = "text" name = "name" placeholder="New name of the goal" required>
+                    <input class = "input" type = "text" name = "description" placeholder="New description" required>
+                    <input type = "submit" name = "editGoal" class = "submit-button" value = "Done">
                 </form>
             </div>
         </div>
@@ -613,7 +633,7 @@
 		</div>
 		
 	
-        <script src = "assets/projects3.js"></script>
+        <script src = "assets/projects4.js"></script>
        
     </body>
 </html>
